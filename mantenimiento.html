@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sitio en Mantenimiento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #EC671A;
+      --blue:   #3A5BA7;
+      --slate:  #4B5563;
+      --bg:     #0f1117;
+      --surface:#171b26;
+      --border: rgba(255,255,255,0.07);
+      --text-primary: #f2f4f8;
+      --text-muted:   #8a90a8;
+      --orange-glow:  rgba(236,103,26,0.15);
+      --blue-glow:    rgba(58,91,167,0.15);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(58,91,167,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(58,91,167,0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb-orange {
+      position: fixed;
+      bottom: -120px;
+      left: -80px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(236,103,26,0.12) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-blue {
+      position: fixed;
+      top: -100px;
+      right: -80px;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(58,91,167,0.14) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 3.5rem 3rem;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.45);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+      border-radius: 100px;
+    }
+
+    .icon-wrap {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 2rem;
+      background: var(--orange-glow);
+      border: 1px solid rgba(236,103,26,0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(236,103,26,0.3); }
+      50%       { box-shadow: 0 0 0 14px rgba(236,103,26,0); }
+    }
+
+    .icon-wrap svg {
+      width: 34px;
+      height: 34px;
+      stroke: var(--orange);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: spin 10s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(236,103,26,0.12);
+      border: 1px solid rgba(236,103,26,0.3);
+      color: var(--orange);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      line-height: 1.18;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .desc {
+      font-size: 15px;
+      line-height: 1.78;
+      color: var(--text-muted);
+      margin-bottom: 2.25rem;
+    }
+
+    .progress-wrap {
+      background: rgba(255,255,255,0.05);
+      border-radius: 100px;
+      height: 4px;
+      overflow: hidden;
+      margin-bottom: 2.25rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange), var(--blue));
+      border-radius: 100px;
+      animation: progress 3.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes progress {
+      from { width: 18%; }
+      to   { width: 88%; }
+    }
+
+    .team-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .avatars { display: flex; }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--surface);
+      margin-left: -8px;
+      font-size: 11px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .avatar:first-child { margin-left: 0; }
+    .a1 { background: var(--orange); }
+    .a2 { background: var(--blue); }
+    .a3 { background: var(--slate); }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.55;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb-orange"></div>
+  <div class="orb-blue"></div>
+
+  <div class="card">
+
+    <div class="icon-wrap">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
+      </svg>
+    </div>
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      En mantenimiento
+    </div>
+
+    <h1>Estamos trabajando<br>en <em>mejoras</em> para ti</h1>
+
+    <p class="desc">
+      Nuestro equipo de tecnología ya se encuentra trabajando<br>
+      para restaurar el servicio lo antes posible.<br>
+      Lamentamos las molestias ocasionadas.
+    </p>
+
+    <div class="progress-wrap">
+      <div class="progress-bar"></div>
+    </div>
+
+    <div class="team-row">
+      <div class="avatars">
+        <div class="avatar a1">JM</div>
+        <div class="avatar a2">CR</div>
+        <div class="avatar a3">AL</div>
+      </div>
+      <span>Equipo de Tecnología trabajando en ello</span>
+    </div>
+
+    <hr class="divider" />
+
+    <p class="footer-note">Gracias por tu paciencia — estaremos de vuelta pronto.</p>
+
+  </div>
+
+</body>
+</html>
